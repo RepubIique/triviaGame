@@ -1,66 +1,71 @@
-//~~~~~~~~~~~~~~~~~~~~~~ Game logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+//~~~~~~~~~~~~~~~~~~~~~~ GameContainer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-function getQuestions(number, question, answers, rightAnswer) {
-  let questions = {};
-  questions.number = number;
-  questions.question = question;
-  questions.answers = answers;
-  questions.rightAnswer = rightAnswer;
+function displayQuestions() {
+  const queryURL =
+    "https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple";
 
-  return questions;
+  //~~~~~~~~~~~~~~~~~~~~~~ Trivia Game API logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    for (let i = 0; i < response.results.length; i++) {
+      let answers = [
+        response.results[i].correct_answer,
+        ...response.results[i].incorrect_answers
+      ];
+      $("#question").html("<h2>" + response.results[i].question + "</h2>");
+
+      $("#answers").append(
+        '<input type="radio" name="answer">' +
+          "<label>" +
+          answers[0] +
+          "</label><br>" +
+          '<input type="radio" name="answer">' +
+          "<label>" +
+          answers[1] +
+          "</label><br>" +
+          '<input type="radio" name="answer">' +
+          "<label>" +
+          answers[2] +
+          "</label><br>" +
+          '<input type="radio" name="answer">' +
+          "<label>" +
+          answers[3] +
+          "</label><br>"
+      );
+
+      //~~~~~~~~~~~~~~~~~~~~~~ Reset logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+      function reset() {
+        $("#question").html("");
+        $("#answers").html("");
+        displayQuestions();
+      }
+      //~~~~~~~~~~~~~~~~~~~~~~ Timer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+      var number = 40;
+      var intervalId;
+
+      function run() {
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
+      }
+
+      function decrement() {
+        number--;
+        $("#show-number").html("<h3>" + "Time left: " + number + "</h3>");
+        if (number === 0) {
+          stop();
+          reset();
+        }
+      }
+
+      function stop() {
+        clearInterval(intervalId);
+      }
+
+      run();
+    }
+  });
 }
 
-let questionList = [
-  getQuestions(
-    1,
-    "Name the seventh planet from the sun.",
-    ["Earth", "Mercury", "Pluto", "Uranus"],
-    4
-  ),
-  getQuestions(
-    2,
-    "If a woodchuck could chuck wood?",
-    [35, 42, "As much wood the would can chuck", 2],
-    1
-  ),
-  getQuestions(
-    3,
-    "Name the largest ocean of the world",
-    ["Atlantic Ocean", "Pacific Ocean", "Specific Ocean", "Artic Ocean"],
-    2
-  )
-];
-
-function IsRightAnswer(question, guess) {
-  if (question.rightAnswer === guess) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-let currentQuestion = questionList[1];
-
-console.log(IsRightAnswer(currentQuestion, 4));
-
-//~~~~~~~~~~~~~~~~~~~~~~ Timer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
-var number = 60;
-var intervalId;
-
-function run() {
-  clearInterval(intervalId);
-  intervalId = setInterval(decrement, 1000);
-}
-
-function decrement() {
-  number--;
-  $("#show-number").html("<h2>" + number + "</h2>");
-  if (number === 0) {
-    stop();
-  }
-}
-
-function stop() {
-  clearInterval(intervalId);
-}
+displayQuestions();
