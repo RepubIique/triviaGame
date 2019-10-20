@@ -22,22 +22,24 @@ function displayQuestions() {
       $("#question").html("<h2>" + response.results[i].question + "</h2>");
 
       $("#answers").append(
-        '<input type="radio" name="answer">' +
+        '<form name="multipleC">' +
+          '<input type="radio" value="r1" name="answer">' +
           "<label>" +
           answers[0] +
           "</label><br>" +
-          '<input type="radio" name="answer">' +
+          '<input type="radio" value="r2" name="answer">' +
           "<label>" +
           answers[1] +
           "</label><br>" +
-          '<input type="radio" name="answer">' +
+          '<input type="radio" value="r3" name="answer">' +
           "<label>" +
           answers[2] +
           "</label><br>" +
-          '<input type="radio" name="answer">' +
+          '<input type="radio" value="r4" name="answer">' +
           "<label>" +
           answers[3] +
-          "</label><br>"
+          "</label><br>" +
+          "</form>"
       );
     }
 
@@ -75,13 +77,24 @@ function displayQuestions() {
 
 displayQuestions();
 
-//~~~~~~~~~~~ Submit Correct/Incorrect Answer logic ~~~~~~~~~~~~~~~//
+//~~~~~~~~~~~ Check Answer logic ~~~~~~~~~~~~~~~//
 
-function answerChecker() {
-  if (answers[0]) {
-    console.log("right");
-  } else {
-    console.log("nope");
+function answerChecker(ans) {
+  var radios = multipleC.elements[ans];
+  window.rdValue;
+  for (var i = 0; i < radios.length; i++) {
+    var someRadio = radios[i];
+    if (someRadio.checked) {
+      rdValue = someRadio.value;
+      break;
+    } else rdValue = "noRadioChecked";
+  }
+  if (rdValue == "r1") {
+    console.log("Correct !");
+  } else if ((rdValue == "r2", "r3", "r4")) {
+    console.log("Wrong !");
+  } else if (rdValue == "noRadioChecked") {
+    alert("no radio checked");
   }
 }
 
