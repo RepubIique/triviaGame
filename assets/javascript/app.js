@@ -2,6 +2,7 @@
 
 let correctAnswer = [];
 let incorrectAnswers = [];
+let answers = [];
 
 //~~~~~~~~~~~~~~~~~~~~~~ GameContainer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -17,7 +18,7 @@ function displayQuestions() {
     for (let i = 0; i < response.results.length; i++) {
       correctAnswer = response.results[i].correct_answer;
       incorrectAnswers = response.results[i].incorrect_answers;
-      let answers = [correctAnswer, ...incorrectAnswers];
+      answers = [correctAnswer, ...incorrectAnswers];
       $("#question").html("<h2>" + response.results[i].question + "</h2>");
 
       $("#answers").append(
@@ -77,7 +78,7 @@ displayQuestions();
 //~~~~~~~~~~~ Submit Correct/Incorrect Answer logic ~~~~~~~~~~~~~~~//
 
 function answerChecker() {
-  if ((correctAnswer = true)) {
+  if (answers[0]) {
     console.log("right");
   } else {
     console.log("nope");
