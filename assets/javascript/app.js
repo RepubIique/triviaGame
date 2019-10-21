@@ -1,9 +1,10 @@
-//forced global variables
+//Global variables
 
 let correctAnswer = [];
 let incorrectAnswers = [];
 let answers = [];
-
+let correctScore = 0;
+let incorrectScore = 0;
 //~~~~~~~~~~~~~~~~~~~~~~ GameContainer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 function displayQuestions() {
@@ -43,12 +44,6 @@ function displayQuestions() {
       );
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~ Reset logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    function reset() {
-      $("#question").html("");
-      $("#answers").html("");
-      displayQuestions();
-    }
     //~~~~~~~~~~~~~~~~~~~~~~ Timer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     var number = 41;
     var intervalId;
@@ -60,7 +55,7 @@ function displayQuestions() {
 
     function decrement() {
       number--;
-      $("#show-number").html("<h3>" + "Time left: " + number + "</h3>");
+      $("#timer").html("<h3>" + "Time left: " + number + "</h3>");
       if (number === 0) {
         stop();
         reset();
@@ -77,6 +72,14 @@ function displayQuestions() {
 
 displayQuestions();
 
+//~~~~~~~~~~~~~~~~~~~~~~ Reset logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+function reset() {
+  $("#question").html("");
+  $("#answers").html("");
+  $("#timer").html("");
+  displayQuestions();
+}
+
 //~~~~~~~~~~~ Check Answer logic ~~~~~~~~~~~~~~~//
 
 function answerChecker(ans) {
@@ -90,13 +93,27 @@ function answerChecker(ans) {
     } else rdValue = "noRadioChecked";
   }
   if (rdValue == "r1") {
-    console.log("Correct !");
+    answerIsCorrect();
+    reset();
   } else if ((rdValue == "r2", "r3", "r4")) {
-    console.log("Wrong !");
-  } else if (rdValue == "noRadioChecked") {
-    alert("no radio checked");
+    answerIsIncorrect();
+    reset();
+  } else {
+    // not working
+    console.log("no radio checked");
   }
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~ End game after 3 rounds logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // to do
+
+//~~~~~~~~~~~~~~~~~~~~~~ Win/Lose logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+function answerIsCorrect() {
+  correctScore++;
+  $("#score-counter").html("<h3>" + "Score: " + correctScore + "</h3>");
+}
+
+function answerIsIncorrect() {
+  incorrectScore++;
+  $("#score-decounter").html("<h3>" + "Wrong: " + incorrectScore + "</h3>");
+}
