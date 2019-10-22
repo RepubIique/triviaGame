@@ -12,7 +12,6 @@ var downloadTimer = null;
 displayQuestions();
 //~~~~~~~~~~~~~~~~~~~~~~ GameContainer logic ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 function displayQuestions() {
-  // How many rounds do you want players to continue for?
   if (questionsAnswered == 10) {
     showResults();
   } else {
@@ -105,23 +104,26 @@ function answerChecker(ans) {
 
 function answerIsCorrect() {
   correctScore++;
-  $("#score-counter").html(`<h3>Score:${correctScore}</h3>`);
   displayQuestions();
   clearInterval(downloadTimer);
 }
 
 function answerIsIncorrect() {
   incorrectScore++;
-  $("#score-decounter").html(`<h3>Wrong:${incorrectScore}</h3>`);
   displayQuestions();
   clearInterval(downloadTimer);
 }
 
 function showResults() {
-  $("#question").html("Game has ended");
+  $("#rsButton").attr("style", "");
+  $("#question").html("");
   $("#answers").html("");
   $("#timer").html("");
   $("#submitButton").hide();
   $("#score-counter").html(`<h3>Score:${correctScore}</h3>`);
   $("#score-decounter").html(`<h3>Wrong:${incorrectScore}</h3>`);
+}
+
+function startNewGame() {
+  location.reload();
 }
