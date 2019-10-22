@@ -4,22 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Trivia Questions</title>
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../triviaGame/assets/css/style.css"
+    />
   
 </head>
 
 <body>
-    <div id="container">
-      
-        <div id="question"></div>
-        <div id="answers"></div>
-        <button type="button" value="Check" onclick="answerChecker('answer')">Submit</button>
-        <div id="timer"></div>
+  <h1>Random Trivia Generator</h1>
+  <h4>*insert pretty fonts here</h4>
+  <h5>*and higher res image lmao</h5>
+  <div id="container">
 
-    </div>
+      <div id="question"></div>
+      <div id="answers"></div>
+      <button id="submitButton" type="button" value="Check" onclick="answerChecker('answer')">Submit</button>
+      <div id="timer"></div>
+  
+  </div>
+
     <div class="row">
-      <div id="score-counter"></div>
-      <div id="score-decounter"></div>  
+        <div style="text-align: center;" class="col-md-12">
+            <div id="score-counter"></div>
+        </div>
     </div>
+      
+    
+    <div class="row">
+        <div style="text-align: center;" class="col-md-12">
+            <div id="score-decounter"></div>
+        </div>
+    </div>
+    
+      
+    
        
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
